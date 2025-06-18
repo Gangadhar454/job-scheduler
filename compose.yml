@@ -1,0 +1,26 @@
+version: '3.8'
+services:
+  scheduler:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+    command: >
+      sh -c "sh ./wait-for.sh db:5432
+        python manage.py migrate &&
+        gunicorn --bind 0.0.0.0:8000 scheduler.wsgi:application
+      "
+  db:
+    image: postgres:13
+    environment:
+      - POSTGRES_DB=scheduler_db
+      - POSTGRES_USER=scheduler
+      - POSTGRES_PASSWORD=manager
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
