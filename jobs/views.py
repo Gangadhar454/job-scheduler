@@ -8,13 +8,11 @@ from django.utils import timezone
 
 class JobListView(APIView):
     def get(self, request):
-        """List all jobs"""
         jobs = Job.objects.all()
         serializer = JobSerializer(jobs, many=True)
         return Response(serializer.data)
 
     def post(self, request):
-        """Create a new job"""
         serializer = JobSerializer(data=request.data)
         if serializer.is_valid():
             job = serializer.save(next_run=serializer.validated_data['start_time'])
@@ -25,7 +23,6 @@ class JobListView(APIView):
 
 class JobDetailView(APIView):
     def get(self, request, id):
-        """Retrieve job details by ID"""
         try:
             job = Job.objects.get(id=id)
             serializer = JobSerializer(job)
