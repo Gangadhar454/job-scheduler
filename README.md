@@ -11,7 +11,7 @@ This is a Django-based scheduler microservice for managing and executing jobs wi
 ### Docker Setup
 1. **Clone Repository**:
    ```bash
-   git clone <repository_url>
+   git clone https://github.com/Gangadhar454/job-scheduler.git
    cd job-scheduler
    ```
 
